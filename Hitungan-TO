@@ -1,0 +1,33 @@
+function formatRupiahInput(el) {
+  let angka = el.value.replace(/\D/g, "");
+  el.value = new Intl.NumberFormat("id-ID").format(angka);
+  document.getElementById("deposit").value = angka;
+}
+
+
+function hitungTO() {
+  const depositRaw = document.getElementById("deposit").value;
+  const hasil = document.getElementById("hasilTO");
+
+  const deposit = parseInt(depositRaw);
+  if (!deposit || deposit <= 0) {
+    hasil.innerHTML = "⚠️ Masukkan angka yang valid.";
+    return;
+  }
+
+  if (deposit < 25000) {
+    hasil.innerHTML = "❌ Minimal deposit untuk klaim bonus adalah IDR 25.000.";
+    return;
+  }
+
+  const bonusAwal = Math.min(deposit * 0.5, 25000);
+  const bonusAkhir = Math.min(deposit * 0.5, 25000);
+  const totalTO = (deposit + bonusAwal + bonusAkhir) * 10;
+
+  hasil.innerHTML = `
+    Deposit: IDR ${deposit.toLocaleString("id-ID")}<br>
+    Bonus Awal (50%): IDR ${bonusAwal.toLocaleString("id-ID")}<br>
+    Bonus Akhir (50%): IDR ${bonusAkhir.toLocaleString("id-ID")}<br>
+    <strong>Total TO yang harus dicapai: IDR ${totalTO.toLocaleString("id-ID")}</strong>
+  `;
+}
