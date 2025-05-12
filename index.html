@@ -2,19 +2,34 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Kalkulator TO - COY99</title>
+  <title>Kalkulator TO – COY99</title>
+  <style>
+    body {
+      background: #0b0f0c;
+      color: #d2ffd2;
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    button {
+      padding: 6px 12px;
+      background: #00ff99;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<body style="background:#0b0f0c; color:#d2ffd2; font-family:sans-serif; max-width:600px; margin:auto; padding:20px;">
-
+<body>
   <h2>Kalkulator Turnover Bonus</h2>
 
   <label for="depositInput">Masukkan Jumlah Deposit:</label><br>
-  <input type="text" id="depositInput" placeholder="Misal 100000" oninput="formatRupiahInput(this)">
+  <input type="text" id="depositInput" placeholder="Misal 100000"><br><br>
   <input type="hidden" id="deposit">
-  <br><br>
-  <button onclick="hitungTO()" style="padding:6px 12px; background:#00ff99; border:none; border-radius:5px;">Hitung TO</button>
+  <button onclick="hitungTO()">Hitung TO</button>
 
-  <div id="hasilTO" style="margin-top:20px;"></div>
+  <div id="hasilTO" style="margin-top: 20px;"></div>
 
   <script>
     function formatRupiahInput(el) {
@@ -29,7 +44,7 @@
 
       const deposit = parseInt(depositRaw);
       if (!deposit || deposit <= 0) {
-        hasil.innerHTML = "⚠️ Masukkan angka yang valid.";
+        hasil.innerHTML = "⚠ Masukkan angka yang valid.";
         return;
       }
 
@@ -49,7 +64,12 @@
         <strong>Total TO yang harus dicapai: IDR ${totalTO.toLocaleString("id-ID")}</strong>
       `;
     }
-  </script>
 
+    // Auto-format saat ketik input
+    window.onload = () => {
+      const input = document.getElementById("depositInput");
+      input.addEventListener("input", () => formatRupiahInput(input));
+    };
+  </script>
 </body>
 </html>
