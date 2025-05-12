@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulator TO - COY99</title>
+</head>
+<body style="background:#0b0f0c; color:#d2ffd2; font-family:sans-serif; max-width:600px; margin:auto; padding:20px;">
+
+  <h2>Kalkulator Turnover Bonus</h2>
+
+  <label for="depositInput">Masukkan Jumlah Deposit:</label><br>
+  <input type="text" id="depositInput" placeholder="Misal 100000" oninput="formatRupiahInput(this)">
+  <input type="hidden" id="deposit">
+  <br><br>
+  <button onclick="hitungTO()" style="padding:6px 12px; background:#00ff99; border:none; border-radius:5px;">Hitung TO</button>
+
+  <div id="hasilTO" style="margin-top:20px;"></div>
+
+  <script>
+    function formatRupiahInput(el) {
+      let angka = el.value.replace(/\D/g, "");
+      el.value = new Intl.NumberFormat("id-ID").format(angka);
+      document.getElementById("deposit").value = angka;
+    }
+
+    function hitungTO() {
+      const depositRaw = document.getElementById("deposit").value;
+      const hasil = document.getElementById("hasilTO");
+
+      const deposit = parseInt(depositRaw);
+      if (!deposit || deposit <= 0) {
+        hasil.innerHTML = "⚠️ Masukkan angka yang valid.";
+        return;
+      }
+
+      if (deposit < 25000) {
+        hasil.innerHTML = "❌ Minimal deposit untuk klaim bonus adalah IDR 25.000.";
+        return;
+      }
+
+      const bonusAwal = Math.min(deposit * 0.5, 25000);
+      const bonusAkhir = Math.min(deposit * 0.5, 25000);
+      const totalTO = (deposit + bonusAwal + bonusAkhir) * 10;
+
+      hasil.innerHTML = `
+        Deposit: IDR ${deposit.toLocaleString("id-ID")}<br>
+        Bonus Awal (50%): IDR ${bonusAwal.toLocaleString("id-ID")}<br>
+        Bonus Akhir (50%): IDR ${bonusAkhir.toLocaleString("id-ID")}<br>
+        <strong>Total TO yang harus dicapai: IDR ${totalTO.toLocaleString("id-ID")}</strong>
+      `;
+    }
+  </script>
+
+</body>
+</html>
